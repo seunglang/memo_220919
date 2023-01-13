@@ -1,4 +1,18 @@
 @charset "UTF-8";
+/* header {height:100px; background-color:#EEE6E6;}
+#signUp {width:540px; height:60px; margin:auto;}
+.contents {min-height:500px; width:540px; margin:auto;}
+#signUp {width:540px; height:60px; margin:auto;}
+.btnSignUp {padding: 6px 15px;}
+.btnSignIn {padding: 6px 23px} 이건 내 코드
+footer {height:100px; background-color:#EEE6E6;} */
+
 header {height:100px;}
 .contents {min-height:500px;}
 footer {height:100px;}
+
+.header-box {height:100px;}
+.footer-box {height:100px;}
+
+.sign-up-box {width:550px;}
+.sign-up-table th {background:#D8D8D8;}

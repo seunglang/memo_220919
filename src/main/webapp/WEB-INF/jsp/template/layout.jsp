@@ -18,9 +18,9 @@
 <body>
 	<div id="wrap">
 		<header class="bg-info">
-			<jsp:include page="/WEB-INF/jsp/include/header.jsp" />
+			<jsp:include page="../include/header.jsp" />
 		</header>
-		<section class="contents bg-success">
+		<section class="contents">
 			<jsp:include page="../${viewName}.jsp" />
 		</section>
 		<footer class="bg-info">
