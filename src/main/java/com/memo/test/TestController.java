@@ -42,6 +42,6 @@ public class TestController {
 	@GetMapping("/test4")
 	@ResponseBody() //단건일땐 Map 여러개일땐 List
 	public List<Map<String, Object>> test4() {
-		return postDAO.selectListsTest();
+		return postDAO.selectPostListTest();
 	}
 }

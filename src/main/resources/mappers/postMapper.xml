@@ -3,10 +3,117 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.memo.post.dao.PostDAO">
- 	<select id="selectListsTest" resultType="map">
- 		SELECT
- 			*
- 		FROM
- 			`post`
- 	</select>
- </mapper>
+	<select id="selectPostListTest" resultType="map">
+		SELECT
+			*
+		FROM
+			`post`
+	</select>
+	
+	<insert id="insertPost" parameterType="map">
+		INSERT INTO `post`
+		(
+			`userId`
+			,`subject`
+			,`content`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{subject}
+			, #{content}
+			, #{imagePath}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectPostListByUserId" parameterType="int" resultType="com.memo.post.model.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+			
+		<if test="direction == null">
+			ORDER BY `id` DESC
+		</if>
+		
+		<if test="direction == 'next'">
+			<![CDATA[
+			AND `id` < #{standardId}
+			]]>
+			ORDER BY `id` DESC
+		</if>
+		
+		<if test="direction == 'prev'">
+			<![CDATA[
+			AND `id` > #{standardId}
+			]]>
+		</if>
+		LIMIT ${limit}
+	</select>
+	
+	<select id="selectPostIdByuserIdSort" parameterType="map" resultType="int">
+		SELECT
+			`id`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` ${sort}
+		LIMIT 1
+	</select>
+	
+	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.memo.post.model.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+			AND `id` = #{postId}
+	</select>
+	
+	<update id="updatePostByPostIdUserId" parameterType="map">
+		UPDATE `post`
+		SET
+			`subject` = #{subject}
+			, `content` = #{content}
+			, `updatedAt` = NOW()
+			<!-- imagePath가 있을때만 수정한다. -->
+			<if test="imagePath != null">
+			, `imagePath` = #{imagePath}
+			</if>
+		WHERE
+			`id` = #{postId}
+			AND
+			`userId` = #{userId}
+	</update>
+	
+	<delete id="deletePostByPostIdUserId" parameterType="map">
+		DELETE
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+			AND
+			`id` = #{postId}
+	</delete>
+</mapper>
